@@ -6,6 +6,8 @@ async function main(){
     const dialog = new DialogSystem(gameArea);
     const audio = new AudioManager(gameArea);
     const btn = new ButtonManager(gameArea);
+
+    dialog.setSpeaker("John");
     btn.addButton("123","kk");
     btn.addButton("1234","k2k");
     audio.addAudio("song","resources/Music.mp3");
@@ -15,7 +17,7 @@ async function main(){
     })
     dialog.show();
     await dialog.readWords("gameArea append Child(dia  log.elem ts.box);");
-    window.alert(await btn.showButton());
-    dialog.hide();
+    await dialog.readWords(await btn.showButton());
+    /*dialog.hide();*/
 }
 main();

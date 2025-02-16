@@ -13,6 +13,17 @@ main{
 #buttons button{position: relative;width: 100%; bottom: 0px;display: block;border: 0px; margin: 5% 0%;font-size: 1em;
     background-color: #111111;color: aliceblue;}
 
+    
+#log{
+    position: absolute;top: 0;left: 0;z-index: 102; width: 100%;height: 100%;background-color: #000000dd;
+    overflow: scroll;display: none;
+}
+#log::-webkit-scrollbar {
+    display: none;/* Chrome, Safari and Opera */
+}
+#log section{
+    position: relative;font-size: 0.5em;padding: 5%;border-bottom: 1px solid #ffffff99;
+}
 
 #dialogbox{background-color: aqua;}
 main{background-color: rgb(34, 34, 34);}
