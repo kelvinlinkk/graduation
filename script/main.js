@@ -19,7 +19,7 @@ function setBackground(src){
 
 async function setup(){
     dialog.setSpeaker("John");
-    dialog.setAppearance("resources/sunset.jpg","yellow");
+    dialog.setAppearance("none","yellow");
     await loadSource(img, audio);
     let background = setBackground("resources/sunset.jpg");
     img.setAppearance("Bocchi",{ width:100});
@@ -28,8 +28,8 @@ async function setup(){
 
 async function main(){
     const background = await setup();
-    btn.addButton("123","kk");
-    btn.addButton("1234","k2k");
+    btn.addButton("So far, so good..","Fine");
+    btn.addButton("Not quite so well.","Bad");
     await new Promise((r)=>{
         gameArea.addEventListener("click",()=>{
             audio.audPlay("song",0,0);r()})
@@ -37,8 +37,17 @@ async function main(){
     img.showImg("Bocchi");
     await img.skew("Bocchi", -50,0,1);
     dialog.show();
-    await dialog.readWords("gameArea append Child(dia  log.elem ts.box);");
-    window.alert(await btn.showButton());
+    dialog.readWords("Hello.");
+    await new Promise((r)=>{
+        gameArea.addEventListener("click",()=>{
+            r()})
+    })
+    await dialog.readWords("How are you?");
+    dialog.readWords(await btn.showButton());
+    await new Promise((r)=>{
+        gameArea.addEventListener("dblclick",()=>{
+            r()})
+    })
     dialog.hide();
 }
 main();
