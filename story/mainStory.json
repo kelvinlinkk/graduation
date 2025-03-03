@@ -1,0 +1,30 @@
+{
+    "story1": {
+        "texts": [
+            ["Bocchi","Hello, nice to meet you."],["Bocchi","How are you?"]
+        ],
+        "bgm":"song",
+        "background":"resources/sunset.jpg",
+        "figures":[
+            { "name": "B", "src": "Bocchi" }
+        ],
+        "choices":[
+            { "text": "Fine" ,"value": "So far, so good.." },
+            {  "text": "Bad","value": "Not quite so well." }
+        ]
+    },
+    "story2": {
+        "texts": [
+            ["Bocchi","Hello, nice to meet you."],["Bocchi","How are you?"]
+        ],
+        "bgm":"song",
+        "background":"resources/sunset.jpg",
+        "figures":[
+            { "name": "B", "src": "Bocchi" }
+        ],
+        "choices":[
+            { "text": "Fine" ,"value": "So far, so good.." },
+            {  "text": "Bad","value": "Not quite so well." }
+        ]
+    }
+}
