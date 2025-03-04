@@ -10,5 +10,9 @@
     {
         "name": "sunset",
         "src": "resources/sunset.jpg"
+    },
+    {
+        "name": "livehouse",
+        "src": "resources/livehouse.jpg"
     }
 ]

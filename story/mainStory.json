@@ -1,21 +1,29 @@
 {
     "story1": {
         "texts": [
-            ["Bocchi","Hello, nice to meet you."],["Bocchi","How are you?"]
+            ["Bocchi","I'm ... s...orry,."],
+            ["Bocchi","how are you?"],
+            ["system","button"],
+            ["Bocchi","Where do you live?"],
+            ["system","button"],
+            ["Bocchi","Nice, let's go outside."]
         ],
         "bgm":"song",
-        "background":"resources/sunset.jpg",
+        "background":"resources/livehouse.jpg",
         "figures":[
             { "name": "B", "src": "Bocchi" }
         ],
-        "choices":[
+        "choices":[[
             { "text": "Fine" ,"value": "So far, so good.." },
             {  "text": "Bad","value": "Not quite so well." }
-        ]
+        ],[
+            { "text": "City" ,"value": "I live in the city." },
+            {  "text": "Country","value": "I live in the country." }
+        ]]
     },
     "story2": {
         "texts": [
-            ["Bocchi","Hello, nice to meet you."],["Bocchi","How are you?"]
+            ["Bocchi","Please buy a ticket!"]
         ],
         "bgm":"song",
         "background":"resources/sunset.jpg",
@@ -23,8 +31,6 @@
             { "name": "B", "src": "Bocchi" }
         ],
         "choices":[
-            { "text": "Fine" ,"value": "So far, so good.." },
-            {  "text": "Bad","value": "Not quite so well." }
         ]
     }
 }
