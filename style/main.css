@@ -6,8 +6,14 @@ main{
 #landing{
     position: absolute;inset: 0;z-index: 10;background-color: rgb(156, 51, 109);
 }
+#landing img{
+    position: absolute;inset: 0;width: 100%;height: 100%;object-fit: cover;
+}
+#landing h1{
+    position: absolute;width: 100%;text-align: center;top: 35%; line-height: 10%;color: #111111;
+}
 #landing button{
-    position: absolute;left: 40%;top: 45%; width: 20%;height: 10%;font-size: 1em;
+    position: absolute;left: 40%;top: 50%; width: 20%;height: 10%;font-size: 1em;
 }
 
 #dialogbox{position: absolute;inset:0%;top: 84%; height: 16%; display: none;z-index: 100;}
