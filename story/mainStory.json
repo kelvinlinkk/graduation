@@ -1,5 +1,6 @@
 {
     "story1": {
+        "id": "story1",
         "texts": [
             ["Bocchi","I'm ... s...orry,."],
             ["Bocchi","how are you?"],
@@ -22,6 +23,7 @@
         ]]
     },
     "story2": {
+        "id": "story2",
         "texts": [
             ["Bocchi","Please buy a ticket!"]
         ],
