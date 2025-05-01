@@ -1,8 +1,8 @@
 {
     "main":{
         "texts": [
-            ["affinity","Bocchi", "0"],
-            ["affinity","Nijika", "0"],
+            ["system","affinity","Bocchi", "0"],
+            ["system","affinity","Nijika", "0"],
             ["Narrator","(In the studio)"],
             ["system","setVariable","i","3"],
             ["Nijika","We are having a live show next month~"],
@@ -16,7 +16,7 @@
             ["node","invite"]
         ],
         "bgm":"song",
-        "background":"resources/studio.jpg",
+        "background":"resources/img/studio.jpg",
         "figures":[
             {"color":"#ff2291", "name": "Bocchi", "src": "Bocchi" },
             {"color":"#ffb400", "name": "Nijika", "src":"Nijika"}
@@ -29,12 +29,12 @@
             ["Bocchi","I'm ... s...orry,"],
             ["Bocchi","how are you?"],
             ["system","button"],
-            ["affinity","Bocchi", "5"],
+            ["system","affinity","Bocchi", "5"],
             ["Bocchi", "Could you give me a moment?"],
             ["node",""]
         ],
         "bgm":"song",
-        "background":"resources/livehouse.jpg",
+        "background":"resources/img/livehouse.jpg",
         "figures":[
             {"color":"#ff2291",  "name": "Bocchi", "src": "Bocchi" }
         ],
@@ -51,11 +51,11 @@
             ["Narrator","(You and Bocchi go to outside, under gorgeous sunset)"],
             ["Bocchi","We have a live performance next month."],
             ["Bocchi","Please buy a ticket!(run)"],
-            ["affinity","Bocchi", "10"],
+            ["system","affinity","Bocchi", "10"],
             ["node","end"]
         ],
         "bgm":"song",
-        "background":"resources/sunset.jpg",
+        "background":"resources/img/sunset.jpg",
         "figures":[
             {"color":"#ff2291", "name": "Bocchi", "src": "Bocchi" }
         ],

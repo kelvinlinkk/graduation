@@ -94,7 +94,7 @@ window.onload = () => {
     // Start a new game when the start button is clicked
     startbtn.addEventListener('click', async e => {
         landing.style.display = 'none';
-        await game.startloop();
+        await game.startloop("resources/playscript/mainStory.json");
         startbtn.style.display = "initial";
         returnToLanding();
     });

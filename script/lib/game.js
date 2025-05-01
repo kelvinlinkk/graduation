@@ -21,6 +21,7 @@ export class Game {
         };
 
         // Initialize game state variables.
+        this.gameFile = "";
         this.activeCharacters = []; // List of active characters in the scene.
         this.backgroundImage = null; // Current background image.
         this.isGamePaused = false; // Pause state of the game.
@@ -42,7 +43,7 @@ export class Game {
     toggleGamePause() {
         this.isGamePaused = !this.isGamePaused;
         this.systemManagers.buttonManager.isInteractive = !this.systemManagers.buttonManager.isInteractive;
-
+        this.systemManagers.audioManager.toggleAllAudio();
         // Resolve the pause promise if the game is resumed.
         if (!this.isGamePaused && this.pausePromiseResolver) {
             this.pausePromiseResolver();
@@ -130,7 +131,6 @@ export class Game {
         };
         localStorage.clear();
         localStorage.setItem("data", JSON.stringify(data));
-        console.log(data);
     }
 
     // Plays a story segment based on the provided resources.
@@ -143,6 +143,9 @@ export class Game {
                 ansCount += 1;
                 this.saveProgress(ansCount, lineCount);
                 await this.waitForUser();
+            },
+            affinity: (params) => {
+                this.affinity[params[0]] = (this.affinity[params[0]] ? this.affinity[params[0]] : 0) + parseInt(params[1]);
             },
             setVariable: (params) => {
                 if (this.variable[params[0]] === undefined) {
@@ -177,9 +180,6 @@ export class Game {
                     break;
                 case "node":
                     return words === "" ? await this.getChoice(choices[ansCount]) : words;
-                case "affinity":
-                    this.affinity[params[0]] = (this.affinity[params[0]] ? this.affinity[params[0]] : 0) + parseInt(params[1]);
-                    break;
                 default:
                     dialogManager.setSpeaker(speaker);
                     dialogManager.elements.tag.style.color = "aliceblue";
@@ -205,7 +205,7 @@ export class Game {
         this.affinity = data.affinity;
         dialogManager.readSavedLog(data.log);
         try {
-            const response = await fetch('resources/mainStory.json');
+            const response = await fetch(this.gameFile);
             const stories = await response.json();
             const readingStory = data.storyline[data.storyline.length - 1];
             return { stories, readingStory };
@@ -216,17 +216,18 @@ export class Game {
 
     // Ends the game and clears progress.
     ending() {
-        const { dialogManager, imageManager } = this.systemManagers;
+        const { dialogManager, imageManager, audioManager } = this.systemManagers;
         for (const { src } of this.activeCharacters) {
             imageManager.hideImg(src);
         }
+        audioManager.toggleAllAudio();
         dialogManager.hide();
         localStorage.clear();
         dialogManager.readSavedLog([]);
     }
 
     // Starts the game loop, progressing through the story.
-    async startloop(data = {
+    async startloop(name, data = {
         log: [],
         storyline: ["main"],
         ans: 0,
@@ -234,9 +235,9 @@ export class Game {
         affinity: {},
         variable: {}
     }) {
+        this.gameFile = name;
         var { stories, readingStory } = await this.initialize(data);
         var { ans, line } = data;
-
         while (readingStory !== "end") {
             this.completedStoryIds.push(readingStory);
             let nextStory = await this.playStory(ans, line, stories[readingStory]);

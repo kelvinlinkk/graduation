@@ -10,6 +10,9 @@ class AudioManager {
         // Maximum volume level for audio playback.
         this.maxVolume = 1;
         
+        // Flag to indicate whether the audio is currently playing.
+        this.toggle = false;
+
         // Append the hidden container to the provided main element.
         main.appendChild(this.audfile);
     }
@@ -63,6 +66,18 @@ class AudioManager {
             this.fadeOut(audio, fade);
         } else {
             audio.pause();
+        }
+    }
+
+    // Toggles the playback of all audio elements.
+    toggleAllAudio() {
+        this.toggle = !this.toggle;
+        for (let audio in this.audioEffects) {
+            if (this.toggle) {
+                this.audioEffects[audio].pause();
+            } else {
+                this.audioEffects[audio].play();
+            }
         }
     }
 
