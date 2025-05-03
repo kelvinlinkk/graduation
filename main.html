@@ -6,23 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game name here</title>
     <link rel="stylesheet" href="style/main.css">
-    <script type="module" src="script/main.js"></script>
     <link rel="preload" href="resources/img/BTR.jpg" as="image">
     <script>window.ondragstart = function() {return false}</script>
 </head>
 
 <body>
     <main>
+        <div id="showArea"></div>            
         <img class="funcbtn" id="settingbtn" src="assets/icon/setting.png">
         <img class="funcbtn" id="affinitybtn" src="assets/icon/affinity.png">
         <img class="funcbtn" id="exitbtn" src="assets/icon/exit.png">
-        <div id="showArea"></div>
         <div id="landing">
             <img src="resources/img/BTR.jpg">
             <h1 style="color: #ff2291;">BOCCHI!</h1>
             <button class="startbtn" id="startbtn">START</button>
             <button class="startbtn" id="continuebtn">CONTINUE</button>
         </div>
+        <script type="module" src="script/main.js"></script>
     </main>
 </body>
 
