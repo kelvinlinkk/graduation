@@ -222,6 +222,7 @@ export class Game {
         }
         audioManager.toggleAllAudio();
         dialogManager.hide();
+        this.backgroundImage.style.display = "none";
         localStorage.clear();
         dialogManager.readSavedLog([]);
     }

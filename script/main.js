@@ -1,12 +1,24 @@
 // Import the Game class and Landing class from their respective modules
 import { Game } from './lib/game.js';
 import { Landing } from './landing.js';
-
+import { DrumGame } from './drum.js';
 // Create a new instance of the Game class to manage the game logic
 const game = new Game();
 
 // Create a new instance of the Landing class to manage the landing screen
 const landing = new Landing(game);
+
+// Create a new instance of the DrumGame class to manage the drum game
+const drumGame = new DrumGame({
+    notesContainerId: 'notes',
+    scoreDisplayId: 'score',
+    missesDisplayId: 'misses',
+    colors: ['red', 'blue'],
+    noteSpeed: 2, // px per frame
+    spawnInterval: 1000, // ms
+    hitZoneLeft: 80,
+    hitZoneRight: 140
+});
 
 // Initialize the game when the window loads
 window.onload = () => {
@@ -23,9 +35,9 @@ window.onload = () => {
 
         // Start the game loop with the main story JSON file
         await game.startloop("resources/chapters/mainStory.json");
-
+        drumGame.start()
         // Return to the landing screen after the game ends
-        landing.returnToLanding();
+        //landing.returnToLanding();
     });
 
     // Add an event listener to the "Continue" button
