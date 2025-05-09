@@ -1,32 +1,21 @@
 // Import the Game class and Landing class from their respective modules
 import { Game } from './lib/game.js';
 import { Landing } from './landing.js';
-import { DrumGame } from './drum.js';
 // Create a new instance of the Game class to manage the game logic
 const game = new Game();
 
 // Create a new instance of the Landing class to manage the landing screen
 const landing = new Landing(game);
 
-// Create a new instance of the DrumGame class to manage the drum game
-const drumGame = new DrumGame({
-    notesContainerId: 'notes',
-    scoreDisplayId: 'score',
-    missesDisplayId: 'misses',
-    colors: ['red', 'blue'],
-    noteSpeed: 2, // px per frame
-    spawnInterval: 1000, // ms
-    hitZoneLeft: 80,
-    hitZoneRight: 140
-});
-
 // Initialize the game when the window loads
 window.onload = () => {
     // Check if there is saved game data in localStorage
-    const hasSavedData = localStorage.getItem('data');
+    const savedData = JSON.parse(localStorage.getItem('data'));
+    // If there is saved data, parse it and set it in the game instance
+    const completedEnds = JSON.parse(localStorage.getItem('completedEnds')) || {"name": []};
 
     // Show or hide the "Continue" button based on the presence of saved data
-    landing.buttons.continuebtn.style.display = hasSavedData ? "initial" : "none";
+    landing.buttons.continuebtn.style.display = savedData ? "initial" : "none";
 
     // Add an event listener to the "Start" button
     landing.buttons.startbtn.addEventListener('click', async () => {
@@ -34,8 +23,11 @@ window.onload = () => {
         landing.landingArea.style.display = 'none';
 
         // Start the game loop with the main story JSON file
-        await game.startloop("resources/chapters/mainStory.json");
-        drumGame.start()
+        const end = await game.main();
+        if(!completedEnds['name'].includes(end)) {
+            completedEnds['name'].push(end);
+            localStorage.setItem('completedEnds', JSON.stringify(completedEnds));
+        }
         // Return to the landing screen after the game ends
         //landing.returnToLanding();
     });
@@ -49,12 +41,14 @@ window.onload = () => {
         if (game.isGamePaused) {
             game.toggleGamePause();
         } else {
-            const savedData = JSON.parse(localStorage.getItem('data'));
-            await game.startloop("resources/chapters/mainStory.json", savedData);
+        const end = await game.main(savedData);
+        if(!completedEnds['name'].includes(end)) {
+            completedEnds['name'].push(end);
+            localStorage.setItem('completedEnds', JSON.stringify(completedEnds));
         }
-
-        // Return to the landing screen after the game ends
-        landing.returnToLanding();
+            // Return to the landing screen after the game ends
+            landing.returnToLanding();
+        }
     });
 };
 

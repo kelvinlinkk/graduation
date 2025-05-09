@@ -1,120 +1,128 @@
 # Graduation Game Project
 
 ## Overview
-The Graduation Game Project is an interactive visual novel game built using JavaScript, HTML, and CSS. It features a dynamic storytelling system, character interactions, and customizable game mechanics. The project is designed to provide an engaging experience for players through its dialog system, affinity tracking, and branching storylines.
+The Graduation Game Project is an interactive visual novel built with JavaScript, HTML, and CSS. It features a dynamic dialog system, branching storylines, character affinity tracking, and a rhythm mini-game. The project is designed to provide an engaging, extensible experience for players and developers alike.
 
 ## Features
-- **Dynamic Dialog System**: Displays character dialogs with a typing effect and maintains a log of conversations.
-- **Affinity System**: Tracks the player's relationship with characters based on choices made during the game.
-- **Interactive Choices**: Players can make decisions that influence the storyline and character relationships.
-- **Audio Management**: Background music and sound effects with volume control and fade effects.
-- **Image Management**: Handles character sprites, background images, and animations like scaling, rotation, and movement.
-- **Save and Load**: Automatically saves game progress and allows players to continue from where they left off.
-- **Customizable Storylines**: Easily extendable story structure using JSON files.
+- **Dynamic Dialog System**: Character dialogs with a typing effect and conversation log.
+- **Affinity System**: Tracks player relationships with characters based on choices.
+- **Interactive Choices**: Player decisions influence the storyline and character affinity.
+- **Audio Management**: Background music and sound effects with volume and fade controls.
+- **Image Management**: Handles character sprites, backgrounds, and image animations.
+- **Save and Load**: Automatic progress saving and the ability to continue from the last session.
+- **Customizable Storylines**: Easily extendable via JSON files.
+- **Rhythm Mini-Game**: Includes a drum rhythm game as part of the story.
 
 ## File Structure
-- **`main.html`**: The main entry point of the game.
-- **`style/main.css`**: Contains the styles for the game's UI.
-- **`script/main.js`**: Initializes the game and handles UI interactions.
-- **`script/lib/`**: Contains modular classes for game systems:
+- **`main.html`**: Main entry point of the game.
+- **`style/main.css`**: Game UI styles.
+- **`script/main.js`**: Game initialization and UI logic.
+- **`script/lib/`**: Modular classes for game systems:
   - `game.js`: Core game logic.
-  - `dialog.js`: Manages dialog display and logs.
-  - `button.js`: Handles interactive buttons.
-  - `image.js`: Manages character and background images.
-  - `audio.js`: Controls audio playback and effects.
-  - `util.js`: Utility functions for loading resources.
-- **`resources/`**: Stores game assets and configuration files:
-  - `mainStory.json`: Defines the game's storyline.
-  - `audio.json`: Lists audio resources.
-  - `image.json`: Lists image resources.
+  - `dialog.js`: Dialog display and log management.
+  - `button.js`: Interactive button handling.
+  - `image.js`: Character and background image management.
+  - `audio.js`: Audio playback and effects.
+  - `util.js`: Resource loading utilities.
+- **`script/custom/`**: Custom mini-games (e.g., `drum.js` for the rhythm game).
+- **`resources/`**: Game assets and configuration:
+  - `mainStory.json`: Storyline definitions.
+  - `audio.json`: Audio resource list.
+  - `image.json`: Image resource list.
+- **`assets/`**: Icons and profile images.
 
-## Methods
+## Main Classes & Methods
 
-### **Game Class (`game.js`)**
-- **`toggleGamePause()`**: Toggles the game's pause state and resolves the pause promise when resumed.
-- **`waitForResume()`**: Waits for the game to resume if paused.
-- **`setBackgroundImage(src)`**: Sets or updates the background image.
-- **`setStage(bgm, background, figures)`**: Configures the stage with background music, background image, and character figures.
-- **`waitForUser()`**: Waits for user interaction (click or space key).
-- **`setupChoices(choices)`**: Configures choice buttons for the user.
-- **`getChoice(choices)`**: Displays choices and waits for the user to make a selection.
-- **`saveProgress(ans, line)`**: Saves the current game progress to local storage.
-- **`playStory(ans, line, storyResources)`**: Plays a story segment based on the provided resources.
-- **`initialize(data)`**: Initializes the game with saved data or default settings.
-- **`ending()`**: Ends the game and clears progress.
-- **`startloop(data)`**: Starts the game loop, progressing through the story.
+### Game (`game.js`)
+- `toggleGamePause()`: Pause/resume the game.
+- `waitForResume()`: Wait for the game to resume if paused.
+- `setBackgroundImage(src)`: Set or update the background image.
+- `setStage(bgm, background, figures)`: Configure the stage with music, background, and characters.
+- `waitForUser()`: Wait for user interaction (click or space).
+- `setupChoices(choices)`: Display choice buttons.
+- `getChoice(choices)`: Await and return the user's choice.
+- `saveProgress(ans, line)`: Save current progress to local storage.
+- `playStory(ans, line, storyResources)`: Play a story segment.
+- `initialize(chapter, data)`: Initialize game state and load resources.
+- `ending()`: End the game and clear progress.
+- `startloop(chapter, data)`: Main story loop.
 
-### **DialogSystem Class (`dialog.js`)**
-- **`createElement(tag, attributes)`**: Utility method to create a DOM element with specified attributes.
-- **`createLog(text, speaker)`**: Creates a new log entry with the given text and optional speaker.
-- **`showLog()`**: Toggles the visibility of the log area.
-- **`readSavedLog(log)`**: Reads and displays a saved log from an array of log entries.
-- **`readWords(text)`**: Displays text one character at a time with a typing effect.
-- **`delay(ms)`**: Utility method to create a delay for a specified number of milliseconds.
-- **`setText(text)`**: Sets the text content of the dialog box.
-- **`setSpeaker(speaker)`**: Sets the current speaker and updates the name tag.
-- **`setAppearance(color)`**: Sets the appearance of the dialog text (e.g., color).
-- **`show()`**: Shows the dialog box.
-- **`hide()`**: Hides the dialog box.
+### DialogSystem (`dialog.js`)
+- `createLog(text, speaker)`: Add a dialog log entry.
+- `showLog()`: Toggle the dialog log display.
+- `readSavedLog(log)`: Load and display saved logs.
+- `readWords(text)`: Typing effect for dialog text.
+- `setText(text)`: Set dialog box text.
+- `setSpeaker(speaker)`: Set the current speaker.
+- `setAppearance(color)`: Set dialog text color.
+- `show() / hide()`: Show or hide the dialog box.
 
-### **ButtonManager Class (`button.js`)**
-- **`createElement(tag, attributes)`**: Utility method to create a DOM element with specified attributes.
-- **`addButton(info, text)`**: Adds a new button with the specified class name and text.
-- **`showButton()`**: Displays the button area and handles user interaction with buttons.
-- **`clearButton(name)`**: Clears buttons from the button area.
+### ButtonManager (`button.js`)
+- `addButton(info, text)`: Add a button.
+- `showButton()`: Display buttons and handle selection.
+- `clearButton(name)`: Remove buttons.
 
-### **AudioManager Class (`audio.js`)**
-- **`createElement(tag, attributes)`**: Utility method to create a DOM element with specified attributes.
-- **`addAudio(name, src)`**: Adds a new audio element with the given name and source URL.
-- **`setVolume(volume)`**: Sets the volume for all audio elements.
-- **`audPlay(name, time, fade)`**: Plays the specified audio by name, with optional duration and fade-in effect.
-- **`audStop(name, fade)`**: Stops the specified audio by name, with an optional fade-out effect.
-- **`fadeIn(audio, duration)`**: Gradually increases the volume of the audio over the specified duration.
-- **`fadeOut(audio, duration)`**: Gradually decreases the volume of the audio over the specified duration.
+### AudioManager (`audio.js`)
+- `addAudio(name, src)`: Add an audio element.
+- `setVolume(volume)`: Set global audio volume.
+- `audPlay(name, time, fade)`: Play audio with optional duration/fade.
+- `audStop(name, fade)`: Stop audio with optional fade.
+- `fadeIn(audio, duration)`: Fade in audio.
+- `fadeOut(audio, duration)`: Fade out audio.
 
-### **ImageManager Class (`image.js`)**
-- **`createElement(tag, attributes)`**: Utility method to create a DOM element with specified attributes.
-- **`getImg(name, src)`**: Retrieves an image element by name or creates a new one if it doesn't exist.
-- **`showImg(name)`**: Displays an image element by name.
-- **`hideImg(name)`**: Hides an image element by name.
-- **`setAppearance(name, { left, top, zIndex, width, height })`**: Sets the appearance of an image element.
-- **`move(name, deltaX, deltaY, time)`**: Moves an image element by a specified delta over a given duration.
-- **`scale(name, w, h, time)`**: Scales an image element to a specified width and height over a given duration.
-- **`skew(name, angleX, angleY, time)`**: Skews an image element by specified angles over a given duration.
-- **`rotate(name, angle, time)`**: Rotates an image element by a specified angle over a given duration.
+### ImageManager (`image.js`)
+- `getImg(name, src)`: Get or create an image element.
+- `showImg(name) / hideImg(name)`: Show or hide an image.
+- `setAppearance(name, { left, top, zIndex, width, height })`: Set image position and size.
+- `move(name, deltaX, deltaY, time)`: Animate image movement.
+- `scale(name, w, h, time)`: Animate image scaling.
+- `skew(name, angleX, angleY, time)`: Animate image skew.
+- `rotate(name, angle, time)`: Animate image rotation.
 
-### **Utility Functions (`util.js`)**
-- **`loadSource(img, aud)`**: Loads image and audio resources from JSON files.
+### Utility (`util.js`)
+- `loadSource(img, aud)`: Load image and audio resources from JSON.
 
 ## How to Run
-1. Clone the repository to your local machine.
-2. Open `main.html` in a web browser.
-3. Start the game by clicking the "START" button.
+1. Clone or download the repository.
+2. Open `main.html` in your web browser.
+3. Click "START" to begin the game.
 
 ## How to Extend
-### Adding New Characters
-1. Add the character's image to the `resources/` folder.
+
+### Add New Characters
+1. Add the character's image to `resources/img/`.
 2. Update `resources/image.json` with the character's name and image path.
 
-### Adding New Storylines
-1. Edit `resources/mainStory.json` to include new story nodes.
-2. Define texts, choices, and other properties for the new storyline.
+### Add New Storylines
+1. Edit `resources/mainStory.json` to add new story nodes.
+2. Define texts, choices, and properties for each node.
 
-### Adding New Audio
-1. Add the audio file to the `resources/` folder.
+### Add New Audio
+1. Add audio files to `resources/aud/`.
 2. Update `resources/audio.json` with the audio name and file path.
 
 ## Controls
+
 - **Mouse**: Click to interact with dialogs and buttons.
 - **Keyboard**:
   - `Space`: Progress through dialogs.
   - `Escape`: Pause the game and return to the landing screen.
   - `L`: Toggle the dialog log.
   - `` ` ``: Clear saved progress.
+  - `F` / `J`: Play the drum mini-game (red/blue notes).
+
+
+## Issues and Plans
+- **Settings**:
+  - `Sync`: Sync user settings automatically
+  - `Save and resume`: Combines the backup files and saved local data
+- Landing page:
+  - `Profile`:Highlight the characters that's been unlocked
+  - `Personalization`: Custom our own playable main character 
 
 ## License
-This project is for educational purposes. Feel free to modify and use it as a base for your own projects.
+This project is for educational purposes. You may modify and use it as a base for your own projects.
 
 ## Credits
-- **Development**: [Your Name]
-- **Assets**: All assets used in this project are placeholders and should be replaced with original or properly licensed content for distribution.
+- **Development**: Kelvin Lin
+- **Assets**: All assets are placeholders and should be replaced with original or properly licensed content for distribution.

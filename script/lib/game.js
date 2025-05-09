@@ -4,6 +4,7 @@ import AudioManager from './audio.js';
 import ButtonManager from './button.js';
 import ImageManager from './image.js';
 import { loadSource } from './util.js';
+import { DrumGame } from '../custom/drum.js';
 
 // Game class manages the overall game logic, including systems, story progression, and user interaction.
 export class Game {
@@ -11,6 +12,7 @@ export class Game {
         // Create the main game container.
         this.gameContainer = document.querySelector("main").appendChild(document.createElement("div"));
         this.gameContainer.id = "gameContainer";
+        this.storyline = "";
 
         // Initialize system managers for dialog, audio, buttons, and images.
         this.systemManagers = {
@@ -21,7 +23,6 @@ export class Game {
         };
 
         // Initialize game state variables.
-        this.gameFile = "";
         this.activeCharacters = []; // List of active characters in the scene.
         this.backgroundImage = null; // Current background image.
         this.isGamePaused = false; // Pause state of the game.
@@ -122,8 +123,9 @@ export class Game {
     // Saves the current game progress to local storage.
     saveProgress(ans, line) {
         const data = {
+            storyline: this.storyline,
             log: this.systemManagers.dialogManager.log,
-            storyline: this.completedStoryIds,
+            completeStoryIds: this.completedStoryIds,
             ans,
             line,
             affinity: this.affinity,
@@ -198,17 +200,18 @@ export class Game {
     }
 
     // Initializes the game with saved data or default settings.
-    async initialize(data) {
+    async initialize(chapter, data) {
         const { dialogManager, imageManager, audioManager } = this.systemManagers;
         dialogManager.setAppearance("#ffffff");
         await loadSource(imageManager, audioManager);
+        this.storyline = data.storyline;
         this.affinity = data.affinity;
         dialogManager.readSavedLog(data.log);
         try {
-            const response = await fetch(this.gameFile);
-            const stories = await response.json();
-            const readingStory = data.storyline[data.storyline.length - 1];
-            return { stories, readingStory };
+            const response = await fetch("resources/stories/" + this.storyline);
+            const chapters = await response.json();
+            const readingStory = data.completeStoryIds[data.completeStoryIds.length - 1];
+            return { stories: chapters[chapter], readingStory };
         } catch (error) {
             console.error('Failed to load or play story:', error);
         }
@@ -228,16 +231,8 @@ export class Game {
     }
 
     // Starts the game loop, progressing through the story.
-    async startloop(name, data = {
-        log: [],
-        storyline: ["main"],
-        ans: 0,
-        line: 0,
-        affinity: {},
-        variable: {}
-    }) {
-        this.gameFile = name;
-        var { stories, readingStory } = await this.initialize(data);
+    async startloop(chapter, data) {
+        var { stories, readingStory } = await this.initialize(chapter, data);
         var { ans, line } = data;
         while (readingStory !== "end") {
             this.completedStoryIds.push(readingStory);
@@ -246,5 +241,32 @@ export class Game {
             ans = 0; line = 0;
         }
         if (readingStory === "end") this.ending();
+    }
+
+    async main(data = {
+        storyline: "mainStory.json",
+        log: [],
+        completeStoryIds: ["main"],
+        ans: 0,
+        line: 0,
+        affinity: {},
+        variable: {}
+    }) {
+        // Create a new instance of the DrumGame class to manage the drum game
+        const drumGame = new DrumGame({
+            notesContainerId: 'notes',
+            scoreDisplayId: 'score',
+            missesDisplayId: 'misses',
+            colors: ['red', 'blue'],
+            noteSpeed: 8, // px per frame
+            hitZoneLeft: 80,
+            hitZoneRight: 140
+        });
+        await this.startloop("Preface", data);
+        console.log(this.variable["i"]);
+        return {
+            completedEnd : "main"
+        }
+        await drumGame.start();
     }
 }
