@@ -4,7 +4,8 @@ import AudioManager from './audio.js';
 import ButtonManager from './button.js';
 import ImageManager from './image.js';
 import { loadSource } from './util.js';
-import { DrumGame } from '../custom/drum.js';
+import { DrumGame } from '../interaction/drum.js';
+import { CustomPlayer } from '../interaction/custom.js';
 
 // Game class manages the overall game logic, including systems, story progression, and user interaction.
 export class Game {
@@ -250,7 +251,8 @@ export class Game {
         ans: 0,
         line: 0,
         affinity: {},
-        variable: {}
+        variable: {},
+        player: null
     }) {
         // Create a new instance of the DrumGame class to manage the drum game
         const drumGame = new DrumGame({
@@ -262,11 +264,13 @@ export class Game {
             hitZoneLeft: 80,
             hitZoneRight: 140
         });
+        const customplayer = new CustomPlayer();
+        await customplayer.show();
         await this.startloop("Preface", data);
         console.log(this.variable["i"]);
+        await drumGame.start();
         return {
             completedEnd : "main"
         }
-        await drumGame.start();
     }
 }

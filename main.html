@@ -23,22 +23,55 @@
             <button class="startbtn" id="startbtn">START</button>
             <button class="startbtn" id="continuebtn">CONTINUE</button>
         </div>
+        <div id="custom">
+            <div>
+                <div class="figure-box">
+                    <img src="resources/img/BTR.jpg" alt="Character Figure">
+                    <div class="preview">
+                        <b id="previewName">Name: Player</b><br>
+                        <span id="previewSex">Sex: -</span><br>
+                        <span id="previewTrack">Track: -</span>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <h2>Customize Your Character</h2>
+                    <label>Name:<br>
+                        <input id="charName" type="text" maxlength="16" placeholder="Enter name">
+                    </label>
+                    <br><br>
+                    <label>Sex:<br>
+                        <div id="sexBtns" class="btn-group">
+                            <button type="button" data-value="female" class="sex-btn">Female</button>
+                            <button type="button" data-value="male" class="sex-btn">Male</button>
+                            <button type="button" data-value="other" class="sex-btn">Other</button>
+                        </div>
+                    </label>
+                    <br><br>
+                    <label>Track:<br>
+                        <div id="trackBtns" class="btn-group">
+                            <button type="button" data-value="science" class="track-btn">Science track</button>
+                            <button type="button" data-value="social" class="track-btn">Social Science track</button>
+                        </div>
+                    </label>
+                    <br><br>
+                    <button id="customOkBtn" disabled="">OK</button>
+                </div>
 
-        <!--drum-->
-        <span id="drumgame">
-            <div class="scoreboard">
-                Score: <span id="score">0</span> | Misses: <span id="misses">0</span>
-            </div>
-            <div class="drum-container" style="position:relative;">
-                <div class="hit-zone"></div>
-                <div id="notes"></div>
-            </div>
-            <div class="drum">
-                <button id="redbtn">Red (F)</button>
-                <button id="bluebtn">Blue (J)</button>
-            </div>
-        </span>
-        <script type="module" src="script/main.js"></script>
+                <!--drum-->
+                <span id="drumgame">
+                    <div class="scoreboard">
+                        Score: <span id="score">0</span> | Misses: <span id="misses">0</span>
+                    </div>
+                    <div class="drum-container" style="position:relative;">
+                        <div class="hit-zone"></div>
+                        <div id="notes"></div>
+                    </div>
+                    <div class="drum">
+                        <button id="redbtn">Red (F)</button>
+                        <button id="bluebtn">Blue (J)</button>
+                    </div>
+                </span>
+                <script type="module" src="script/main.js"></script>
     </main>
 </body>
 
